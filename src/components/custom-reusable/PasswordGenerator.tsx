@@ -1,10 +1,10 @@
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import GeneratorConfigurator from "./GeneratorConfigurator";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import OutputCard from "./OutputCard";
+import GeneratorConfiguratorForm from "@/components/custom-reusable/forms/GeneratorConfiguratorForm";
 
 export default function PasswordGenerator() {
   return (
-    <Card className="w-96 border-none p-0">
+    <Card className="w-full max-w-[28rem] border-none p-0 z-10">
       <CardHeader className="text-center space-y-5 min-w-full px-0">
         <CardTitle className="text-muted-foreground">Password Generator</CardTitle>
         {/* Card for showing generated password output */}
@@ -13,7 +13,7 @@ export default function PasswordGenerator() {
 
       <CardContent className="border w-full bg-muted p-4">
         {/* Configurator for password generator */}
-        <GeneratorConfigurator />
+        <GeneratorConfiguratorForm />
       </CardContent>
     </Card>
   );

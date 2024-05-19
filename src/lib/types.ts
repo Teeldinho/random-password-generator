@@ -8,7 +8,7 @@ export const passwordOptions = [
 ] as const;
 
 export const PasswordFormSchema = z.object({
-  characterLength: z.number().min(8).max(20).default(10),
+  characterLength: z.number().min(0).max(20).default(0),
   options: z
     .array(z.string())
     .refine((data) => data.length > 0, {
@@ -18,3 +18,11 @@ export const PasswordFormSchema = z.object({
 });
 
 export type PasswordFormType = z.infer<typeof PasswordFormSchema>;
+
+export enum PasswordStrength {
+  Empty = "EMPTY",
+  TooWeak = "TOO_WEAK",
+  Weak = "WEAK",
+  Medium = "MEDIUM",
+  Strong = "STRONG",
+}

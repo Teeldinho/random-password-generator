@@ -1,23 +1,42 @@
 import { create } from "zustand";
-import { devtools, persist } from "zustand/middleware";
+import { devtools } from "zustand/middleware";
+import { PasswordStrength } from "@/lib/types";
 
-interface PasswordState {
+type PasswordState = {
   password: string;
-  setPassword: (password: string) => void;
-}
+  isPasswordGenerated: boolean;
+  strength: PasswordStrength;
+  copied: boolean;
+};
 
-const usePasswordStore = create<PasswordState>()(
-  devtools(
-    persist(
-      (set) => ({
-        password: "",
-        setPassword: (password) => set({ password }),
-      }),
-      {
-        name: "password-storage", // This name is used for local storage
-      }
-    )
-  )
+type PasswordActions = {
+  setCopied: (copied: boolean) => void;
+  setIsPasswordGenerated: (isPasswordGenerated: boolean) => void;
+  setPassword: (password: string, strength: PasswordStrength) => void;
+  resetStore: () => void;
+};
+
+type PasswordStore = PasswordState & PasswordActions;
+
+const initialStoreState: PasswordState = {
+  password: "P4$5W0rD!",
+  isPasswordGenerated: false,
+  strength: PasswordStrength.Empty,
+  copied: false,
+};
+
+const usePasswordStore = create<PasswordStore>()(
+  devtools((set, get) => ({
+    ...initialStoreState,
+
+    setCopied: (copied) => set({ copied }),
+    setIsPasswordGenerated: (isPasswordGenerated) => set({ isPasswordGenerated }),
+    setPassword: (password, strength) => {
+      set({ password, strength });
+      get().setIsPasswordGenerated(true);
+    },
+    resetStore: () => set({ ...initialStoreState }),
+  }))
 );
 
 export default usePasswordStore;

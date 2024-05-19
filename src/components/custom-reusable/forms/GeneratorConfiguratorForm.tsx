@@ -1,18 +1,20 @@
 "use client";
 
-import { PasswordFormSchema, PasswordFormType, passwordOptions } from "@/lib/types";
+import { PasswordFormSchema, PasswordFormType, PasswordStrength, passwordOptions } from "@/lib/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
-import { MoveRight } from "lucide-react";
+import { MoveRight, RotateCcw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel } from "@/components/ui/form";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Slider } from "../ui/slider";
+import { Slider } from "../../ui/slider";
 import usePasswordStore from "@/lib/store/passwordStore";
+import StrengthCard from "../strength/StrengthCard";
+import { cn } from "@/lib/utils";
 
-export default function GeneratorConfigurator() {
-  const setPassword = usePasswordStore((state) => state.setPassword);
+export default function GeneratorConfiguratorForm() {
+  const { setPassword, setCopied, resetStore, isPasswordGenerated } = usePasswordStore((state) => state);
 
   const form = useForm<PasswordFormType>({
     resolver: zodResolver(PasswordFormSchema),
@@ -20,14 +22,15 @@ export default function GeneratorConfigurator() {
   });
 
   function onSubmit(data: PasswordFormType) {
-    console.log(data);
+    setCopied(false);
 
     const generatedPassword = `Password${data.characterLength}`;
-    setPassword(generatedPassword);
+    const generatedStrength = PasswordStrength.Medium;
+    setPassword(generatedPassword, generatedStrength);
 
-    toast.info("Generating Strong Password...", {
-      description: <code className="text-white">{JSON.stringify(data, null, 2)}</code>,
-    });
+    // toast.success("Strong Password Successfully Generated!", {
+    //   description: "You can now copy the password to clipboard or use it wherever you need.",
+    // });
   }
 
   return (
@@ -72,10 +75,26 @@ export default function GeneratorConfigurator() {
           )}
         />
 
-        <Button variant="default" className="uppercase flex flex-row items-center gap-2 w-full">
-          Generate
-          <MoveRight className="size-4" />
-        </Button>
+        <StrengthCard />
+
+        <div className="flex items-center w-full gap-2 transition-all">
+          {/* Generate Button */}
+          <Button variant="default" className="uppercase flex flex-row items-center gap-2 flex-1">
+            Generate
+            <MoveRight className="size-4" />
+          </Button>
+
+          {/* Reset Button */}
+          <Button
+            variant="destructive"
+            size="icon"
+            type="button"
+            className={cn("min-h-full", !isPasswordGenerated && "hidden")}
+            onClick={() => resetStore()}
+          >
+            <RotateCcw className="size-5" />
+          </Button>
+        </div>
       </form>
     </Form>
   );
