@@ -8,7 +8,7 @@ import usePasswordStore from "@/lib/store/passwordStore";
 import { cn } from "@/lib/utils";
 
 export default function OutputCard() {
-  const { password, setCopied, copied } = usePasswordStore((state) => state);
+  const { password, isPasswordGenerated, setCopied, copied } = usePasswordStore((state) => state);
 
   const handleCopyToClipboard = async () => {
     try {
@@ -26,17 +26,15 @@ export default function OutputCard() {
     }
   };
 
-  const isPasswordGenerated = password && password.length > 0;
-
   return (
     <Card className={cn("rounded-none min-w-full p-0 bg-muted transition-all")}>
       <CardContent className="w-full py-2 pr-1 flex flex-row items-center justify-between">
         <p>{isPasswordGenerated ? password : "No password generated yet."}</p>
 
         <div className="flex items-center uppercase gap-2">
-          <p className={cn("text-green-500 text-xs -mr-2", !copied && "hidden")}>Copied</p>
-          <Button variant="ghost" size="icon" onClick={handleCopyToClipboard}>
-            <Files className={cn("size-4 text-primary", copied && "text-green-500")} />
+          <p className={cn("text-primary text-xs -mr-2", !copied && "hidden")}>Copied</p>
+          <Button variant="ghost" size="icon" onClick={handleCopyToClipboard} disabled={!isPasswordGenerated}>
+            <Files className={cn("size-4 text-foreground", copied && "text-primary")} />
           </Button>
         </div>
       </CardContent>
