@@ -52,7 +52,7 @@ export default function GeneratorConfiguratorForm() {
             <FormItem className="flex flex-col gap-1">
               <FormLabel className="flex items-center justify-between">
                 <p>Password Length</p>
-                <p className="text-lg">{field.value ?? 10}</p>
+                <p className="text-lg text-primary">{field.value ?? 10}</p>
               </FormLabel>
               <FormControl>
                 <Slider

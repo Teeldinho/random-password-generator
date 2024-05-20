@@ -1,36 +1,86 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# RandPassGen
+
+RandPassGen is a user-friendly password generator application that uses modern web technologies for secure password creation with customizable settings.
+
+![RandPassGen Preview](public/Desktop.png)
+
+## Project Overview
+
+### Purpose
+
+The purpose of RandPassGen is to generate random, secure passwords based on user-defined criteria, such as length and character types. Users can customize the password settings and copy the generated password for use in various applications.
+
+### Tech Stack
+
+#### Frontend
+
+- **Next.js 14**: A React JS framework for server-rendered applications and static websites.
+- **Radix UI**: Used for UI components to ensure accessibility and high-quality user interfaces.
+- **Tailwind CSS**: Applied for styling, providing a utility-first approach to design.
+- **Zustand**: Used for state management, with slices for modular and maintainable state handling.
+- **React Hook Form**: Applied for form handling and validation.
+- **Zod**: Schema declaration and validation library for TypeScript.
+
+### Additional Packages
+
+- **Class Variance Authority**: Used for handling variant-based styling.
+- **Framer Motion**: Utilized for animations and enhancing user experience.
+- **Lucide React**: Included for icon components.
+- **Sonner**: Used for toast notifications.
+
+## Key Features
+
+- **Password Generation**: Generate random, secure passwords with customizable length and character types.
+- **Password Strength Indicator**: Visual indication of the generated password strength.
+- **Copy to Clipboard**: Easily copy the generated password to the clipboard.
+- **Form Validation**: Ensures valid input using Zod and React Hook Form.
+- **Dynamic Theming**: Implemented using Tailwind CSS variables.
 
 ## Getting Started
 
-First, run the development server:
+1. **Install dependencies**:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+   ```sh
+   npm install
+   ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. **Run the development server**:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+   ```sh
+    npm run dev
+   ```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+3. Build for Production & Start
 
-## Learn More
+   ```sh
+   npm run build
+   npm run start
+   ```
 
-To learn more about Next.js, take a look at the following resources:
+## Usage
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Generate a Password
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+1. **Set Character Length**: Use the slider to set the desired password length.
+2. **Select Character Types**: Check the boxes to include uppercase letters, lowercase letters, numbers, and symbols.
+3. **Generate Password**: Click the "Generate" button to create a password.
+4. **Copy Password**: Click the copy icon to copy the generated password to the clipboard.
 
-## Deploy on Vercel
+### Password Strength
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+The strength of the generated password is visually indicated with color-coded pills:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- **Too Weak**: Red
+- **Weak**: Orange
+- **Medium**: Yellow
+- **Strong**: Green
+
+![Strengths Preview](public/Strengths.png)
+
+## Screenshots
+
+![RandPassGen Preview](public/Desktop.png)
+
+![RandPassGen Empty Preview](public/Desktop-Empty.png)
+
+![RandPassGen Copied Preview](public/Desktop-Copied.png)
