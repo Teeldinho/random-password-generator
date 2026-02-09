@@ -14,3 +14,7 @@ export const GENERATION_TOAST = {
   TITLE: "Password Successfully Generated.",
   DESCRIPTION: "You can now copy the password to clipboard or use it wherever you need.",
 } as const;
+
+export const PASSWORD_UI_DEFAULTS = {
+  STRENGTH_PILL_COUNT: 4,
+} as const;

@@ -2,7 +2,7 @@
 
 import { toast } from "sonner";
 import usePasswordStore from "@/lib/store/passwordStore";
-import { COPY_TOAST_MESSAGES } from "@/lib/helpers/passwordUiText";
+import { COPY_TOAST_MESSAGES } from "@/lib/constants/passwordUi";
 
 export const useOutputCard = () => {
   const { password, isPasswordGenerated, setCopied, copied } = usePasswordStore((state) => state);

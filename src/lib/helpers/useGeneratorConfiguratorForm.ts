@@ -5,7 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { handlePasswordGeneration } from "@/lib/helpers/helpers";
-import { GENERATION_TOAST } from "@/lib/helpers/passwordUiText";
+import { GENERATION_TOAST } from "@/lib/constants/passwordUi";
 import usePasswordStore from "@/lib/store/passwordStore";
 import {
   PASSWORD_DEFAULT_FORM_VALUES,

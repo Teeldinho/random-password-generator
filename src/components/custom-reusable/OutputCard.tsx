@@ -4,7 +4,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Files } from "lucide-react";
 import { Button } from "../ui/button";
 import { cn } from "@/lib/utils";
-import { OUTPUT_CARD_COPY_TEXT } from "@/lib/helpers/passwordUiText";
+import { OUTPUT_CARD_COPY_TEXT } from "@/lib/constants/passwordUi";
 import { useOutputCard } from "@/lib/helpers/useOutputCard";
 
 export default function OutputCard() {
