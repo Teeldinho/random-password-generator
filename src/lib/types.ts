@@ -50,17 +50,27 @@ export const PASSWORD_DEFAULT_FORM_VALUES: PasswordFormType = {
   options: PASSWORD_DEFAULT_OPTIONS,
 };
 
-export enum PasswordStrength {
-  Empty = "EMPTY",
-  TooWeak = "TOO_WEAK",
-  Weak = "WEAK",
-  Medium = "MEDIUM",
-  Strong = "STRONG",
-}
+export const PasswordStrength = {
+  Empty: "EMPTY",
+  TooWeak: "TOO_WEAK",
+  Weak: "WEAK",
+  Medium: "MEDIUM",
+  Strong: "STRONG",
+} as const;
+
+export type PasswordStrength = (typeof PasswordStrength)[keyof typeof PasswordStrength];
+
+const PASSWORD_STRENGTH_VALUES = [
+  PasswordStrength.Empty,
+  PasswordStrength.TooWeak,
+  PasswordStrength.Weak,
+  PasswordStrength.Medium,
+  PasswordStrength.Strong,
+] as const;
 
 export const PasswordStrengthDescriptionSchema = z.object({
   password: z.string(),
-  strength: z.nativeEnum(PasswordStrength),
+  strength: z.enum(PASSWORD_STRENGTH_VALUES),
 });
 
 export type PasswordStrengthDescriptionType = z.infer<typeof PasswordStrengthDescriptionSchema>;
