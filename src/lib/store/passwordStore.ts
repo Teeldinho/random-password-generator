@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { devtools } from "zustand/middleware";
-import { PasswordStrength, PasswordStrengthDescriptionType } from "@/lib/types";
+import { PASSWORD_STRENGTH, PasswordStrength, PasswordStrengthDescriptionType } from "@/lib/types";
 
 type PasswordState = {
   password: string;
@@ -21,7 +21,7 @@ type PasswordStore = PasswordState & PasswordActions;
 const initialStoreState: PasswordState = {
   password: "",
   isPasswordGenerated: false,
-  strength: PasswordStrength.Empty,
+  strength: PASSWORD_STRENGTH.Empty,
   copied: false,
 };
 

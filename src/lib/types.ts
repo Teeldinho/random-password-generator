@@ -50,7 +50,7 @@ export const PASSWORD_DEFAULT_FORM_VALUES: PasswordFormType = {
   options: PASSWORD_DEFAULT_OPTIONS,
 };
 
-export const PasswordStrength = {
+export const PASSWORD_STRENGTH = {
   Empty: "EMPTY",
   TooWeak: "TOO_WEAK",
   Weak: "WEAK",
@@ -58,14 +58,14 @@ export const PasswordStrength = {
   Strong: "STRONG",
 } as const;
 
-export type PasswordStrength = (typeof PasswordStrength)[keyof typeof PasswordStrength];
+export type PasswordStrength = (typeof PASSWORD_STRENGTH)[keyof typeof PASSWORD_STRENGTH];
 
 const PASSWORD_STRENGTH_VALUES = [
-  PasswordStrength.Empty,
-  PasswordStrength.TooWeak,
-  PasswordStrength.Weak,
-  PasswordStrength.Medium,
-  PasswordStrength.Strong,
+  PASSWORD_STRENGTH.Empty,
+  PASSWORD_STRENGTH.TooWeak,
+  PASSWORD_STRENGTH.Weak,
+  PASSWORD_STRENGTH.Medium,
+  PASSWORD_STRENGTH.Strong,
 ] as const;
 
 export const PasswordStrengthDescriptionSchema = z.object({

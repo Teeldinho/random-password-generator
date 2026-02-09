@@ -1,4 +1,5 @@
 import {
+  PASSWORD_STRENGTH,
   PasswordFormSchema,
   PasswordFormType,
   PasswordOptionsRecord,
@@ -8,11 +9,11 @@ import {
 } from "@/lib/types";
 
 const PASSWORD_STRENGTH_LABELS = Object.freeze({
-  [PasswordStrength.Empty]: "",
-  [PasswordStrength.TooWeak]: "Too weak!",
-  [PasswordStrength.Weak]: "Weak",
-  [PasswordStrength.Medium]: "Medium",
-  [PasswordStrength.Strong]: "Strong",
+  [PASSWORD_STRENGTH.Empty]: "",
+  [PASSWORD_STRENGTH.TooWeak]: "Too weak!",
+  [PASSWORD_STRENGTH.Weak]: "Weak",
+  [PASSWORD_STRENGTH.Medium]: "Medium",
+  [PASSWORD_STRENGTH.Strong]: "Strong",
 } as const satisfies Record<PasswordStrength, string>);
 
 const PASSWORD_CHARACTER_SET = Object.freeze({
@@ -30,19 +31,19 @@ export function getReadablePasswordStrength(strength: PasswordStrength): string 
 }
 
 export const pillStrengthMap = Object.freeze({
-  [PasswordStrength.Empty]: 0,
-  [PasswordStrength.TooWeak]: 1,
-  [PasswordStrength.Weak]: 2,
-  [PasswordStrength.Medium]: 3,
-  [PasswordStrength.Strong]: 4,
+  [PASSWORD_STRENGTH.Empty]: 0,
+  [PASSWORD_STRENGTH.TooWeak]: 1,
+  [PASSWORD_STRENGTH.Weak]: 2,
+  [PASSWORD_STRENGTH.Medium]: 3,
+  [PASSWORD_STRENGTH.Strong]: 4,
 } as const satisfies Record<PasswordStrength, number>);
 
 export const pillColorMap = Object.freeze({
-  [PasswordStrength.TooWeak]: "bg-destructive",
-  [PasswordStrength.Weak]: "bg-warning",
-  [PasswordStrength.Medium]: "bg-yellow-500",
-  [PasswordStrength.Strong]: "bg-primary",
-  [PasswordStrength.Empty]: "bg-transparent",
+  [PASSWORD_STRENGTH.TooWeak]: "bg-destructive",
+  [PASSWORD_STRENGTH.Weak]: "bg-warning",
+  [PASSWORD_STRENGTH.Medium]: "bg-yellow-500",
+  [PASSWORD_STRENGTH.Strong]: "bg-primary",
+  [PASSWORD_STRENGTH.Empty]: "bg-transparent",
 } as const satisfies Record<PasswordStrength, string>);
 
 export const isActivePill = (strength: PasswordStrength, index: number): boolean => {
@@ -70,8 +71,8 @@ export const generatePassword = (length: number, options: PasswordOptionsRecord)
 };
 
 export const determineStrength = (password: string): PasswordStrength => {
-  if (password.length === 0) return PasswordStrength.Empty;
-  if (password.length < PASSWORD_TOO_WEAK_LENGTH_THRESHOLD) return PasswordStrength.TooWeak;
+  if (password.length === 0) return PASSWORD_STRENGTH.Empty;
+  if (password.length < PASSWORD_TOO_WEAK_LENGTH_THRESHOLD) return PASSWORD_STRENGTH.TooWeak;
 
   const hasUpper = /[A-Z]/.test(password);
   const hasLower = /[a-z]/.test(password);
@@ -83,15 +84,15 @@ export const determineStrength = (password: string): PasswordStrength => {
   switch (strengthScore) {
     case 0:
     case 1:
-      return PasswordStrength.TooWeak;
+      return PASSWORD_STRENGTH.TooWeak;
     case 2:
-      return PasswordStrength.Weak;
+      return PASSWORD_STRENGTH.Weak;
     case 3:
-      return PasswordStrength.Medium;
+      return PASSWORD_STRENGTH.Medium;
     case 4:
-      return PasswordStrength.Strong;
+      return PASSWORD_STRENGTH.Strong;
     default:
-      return PasswordStrength.Empty;
+      return PASSWORD_STRENGTH.Empty;
   }
 };
 
