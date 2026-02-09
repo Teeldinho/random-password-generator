@@ -76,13 +76,11 @@ export default function GeneratorConfiguratorForm() {
         <StrengthCard />
 
         <div className="flex items-center w-full gap-2 transition-all">
-          {/* Generate Button */}
           <Button type="submit" variant="default" className="uppercase flex flex-row items-center gap-2 flex-1">
             {PASSWORD_GENERATOR_TEXT.GENERATE_BUTTON_LABEL}
             <MoveRight className="size-4" />
           </Button>
 
-          {/* Reset Button */}
           <Button
             variant="destructive"
             size="icon"

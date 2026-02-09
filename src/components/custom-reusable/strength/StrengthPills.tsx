@@ -3,9 +3,9 @@
 import React from "react";
 import { Badge, BadgeProps } from "@/components/ui/badge";
 import { PASSWORD_UI_DEFAULTS } from "@/lib/constants/passwordUi";
+import { useStrengthPills } from "@/lib/hooks/useStrengthPills";
 import { PasswordStrength } from "@/lib/types";
 import { cn } from "@/lib/utils";
-import { getStrengthPillStates } from "@/lib/helpers/strengthPills";
 
 type StrengthPillProps = BadgeProps & {
   strength: PasswordStrength;
@@ -13,7 +13,7 @@ type StrengthPillProps = BadgeProps & {
 };
 
 function StrengthPills({ strength, pillCount = PASSWORD_UI_DEFAULTS.STRENGTH_PILL_COUNT, ...props }: StrengthPillProps) {
-  const pillStates = getStrengthPillStates(strength, pillCount);
+  const { pillStates } = useStrengthPills(strength, pillCount);
   const pills = pillStates.map((pillState, i) => {
     return (
       <Badge
