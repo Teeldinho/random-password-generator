@@ -21,11 +21,7 @@ import usePasswordStore from "@/lib/store/passwordStore";
 import StrengthCard from "../strength/StrengthCard";
 import { cn } from "@/lib/utils";
 import { handlePasswordGeneration } from "@/lib/helpers/helpers";
-
-const GENERATION_TOAST = {
-  TITLE: "Password Successfully Generated.",
-  DESCRIPTION: "You can now copy the password to clipboard or use it wherever you need.",
-} as const;
+import { GENERATION_TOAST } from "@/lib/helpers/passwordUiText";
 
 export default function GeneratorConfiguratorForm() {
   const { setPassword, setCopied, resetStore, isPasswordGenerated } = usePasswordStore((state) => state);

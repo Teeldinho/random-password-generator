@@ -6,18 +6,7 @@ import { Button } from "../ui/button";
 import { toast } from "sonner";
 import usePasswordStore from "@/lib/store/passwordStore";
 import { cn } from "@/lib/utils";
-
-const OUTPUT_CARD_COPY_TEXT = {
-  COPIED: "Copied",
-  EMPTY_PASSWORD: "No password generated yet.",
-} as const;
-
-const COPY_TOAST_MESSAGES = {
-  SUCCESS_TITLE: "Password Copied To Clipboard.",
-  SUCCESS_DESCRIPTION: "You can now paste it wherever you need to.",
-  ERROR_TITLE: "Failed To Copy Password!",
-  ERROR_DESCRIPTION: "Please try again.",
-} as const;
+import { COPY_TOAST_MESSAGES, OUTPUT_CARD_COPY_TEXT } from "@/lib/helpers/passwordUiText";
 
 export default function OutputCard() {
   const { password, isPasswordGenerated, setCopied, copied } = usePasswordStore((state) => state);
