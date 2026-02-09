@@ -4,44 +4,25 @@ import {
   PASSWORD_CHAR_LENGTH_DEFAULT,
   PASSWORD_CHAR_LENGTH_MAX,
   PASSWORD_CHAR_LENGTH_MIN,
-  PASSWORD_DEFAULT_FORM_VALUES,
-  PasswordFormSchema,
-  PasswordFormType,
   passwordOptions,
 } from "@/lib/types";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { toast } from "sonner";
 import { MoveRight, RotateCcw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Slider } from "../../ui/slider";
-import usePasswordStore from "@/lib/store/passwordStore";
 import StrengthCard from "../strength/StrengthCard";
 import { cn } from "@/lib/utils";
-import { handlePasswordGeneration } from "@/lib/helpers/helpers";
-import { GENERATION_TOAST } from "@/lib/helpers/passwordUiText";
+import { useGeneratorConfiguratorForm } from "@/lib/helpers/useGeneratorConfiguratorForm";
 
 export default function GeneratorConfiguratorForm() {
-  const { setPassword, setCopied, resetStore, isPasswordGenerated } = usePasswordStore((state) => state);
-
-  const form = useForm<PasswordFormType>({
-    resolver: zodResolver(PasswordFormSchema),
-    defaultValues: PASSWORD_DEFAULT_FORM_VALUES,
-  });
-
-  function handleGeneratorFormSubmit(data: PasswordFormType) {
-    const passwordDescription = handlePasswordGeneration(data);
-
-    setCopied(false);
-    setPassword(passwordDescription);
-
-    if (passwordDescription.password.length > 0)
-      toast.success(GENERATION_TOAST.TITLE, {
-        description: GENERATION_TOAST.DESCRIPTION,
-      });
-  }
+  const {
+    form,
+    isPasswordGenerated,
+    handleGeneratorFormSubmit,
+    handleGeneratorReset,
+    createHandleGeneratorOptionCheckedChange,
+  } = useGeneratorConfiguratorForm();
 
   return (
     <Form {...form}>
@@ -79,12 +60,7 @@ export default function GeneratorConfiguratorForm() {
                   <FormControl>
                     <Checkbox
                       checked={field.value[option.id]}
-                      onCheckedChange={(checked) => {
-                        field.onChange({
-                          ...field.value,
-                          [option.id]: checked === true,
-                        });
-                      }}
+                      onCheckedChange={createHandleGeneratorOptionCheckedChange(field.value, field.onChange, option.id)}
                     />
                   </FormControl>
                   <FormLabel>{option.label}</FormLabel>
@@ -110,7 +86,7 @@ export default function GeneratorConfiguratorForm() {
             size="icon"
             type="button"
             className={cn("min-h-full", !isPasswordGenerated && "hidden")}
-            onClick={() => resetStore()}
+            onClick={handleGeneratorReset}
           >
             <RotateCcw className="size-5" />
           </Button>
