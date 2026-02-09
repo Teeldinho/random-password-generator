@@ -1,6 +1,14 @@
 "use client";
 
-import { PASSWORD_CHAR_LENGTH_MAX, PASSWORD_CHAR_LENGTH_MIN, PasswordFormSchema, PasswordFormType, passwordOptions } from "@/lib/types";
+import {
+  PASSWORD_CHAR_LENGTH_DEFAULT,
+  PASSWORD_CHAR_LENGTH_MAX,
+  PASSWORD_CHAR_LENGTH_MIN,
+  PASSWORD_DEFAULT_FORM_VALUES,
+  PasswordFormSchema,
+  PasswordFormType,
+  passwordOptions,
+} from "@/lib/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -14,37 +22,34 @@ import StrengthCard from "../strength/StrengthCard";
 import { cn } from "@/lib/utils";
 import { handlePasswordGeneration } from "@/lib/helpers/helpers";
 
+const GENERATION_TOAST = {
+  TITLE: "Password Successfully Generated.",
+  DESCRIPTION: "You can now copy the password to clipboard or use it wherever you need.",
+} as const;
+
 export default function GeneratorConfiguratorForm() {
   const { setPassword, setCopied, resetStore, isPasswordGenerated } = usePasswordStore((state) => state);
 
   const form = useForm<PasswordFormType>({
     resolver: zodResolver(PasswordFormSchema),
-    defaultValues: PasswordFormSchema.parse({
-      characterLength: 1,
-      options: {
-        includeUppercase: true,
-        includeLowercase: true,
-        includeNumbers: true,
-        includeSymbols: false,
-      },
-    }),
+    defaultValues: PASSWORD_DEFAULT_FORM_VALUES,
   });
 
-  function onSubmit(data: PasswordFormType) {
+  function handleGeneratorFormSubmit(data: PasswordFormType) {
     const passwordDescription = handlePasswordGeneration(data);
 
     setCopied(false);
     setPassword(passwordDescription);
 
     if (passwordDescription.password.length > 0)
-      toast.success("Password Successfully Generated.", {
-        description: "You can now copy the password to clipboard or use it wherever you need.",
+      toast.success(GENERATION_TOAST.TITLE, {
+        description: GENERATION_TOAST.DESCRIPTION,
       });
   }
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+      <form onSubmit={form.handleSubmit(handleGeneratorFormSubmit)} className="space-y-6">
         <FormField
           control={form.control}
           name="characterLength"
@@ -52,7 +57,7 @@ export default function GeneratorConfiguratorForm() {
             <FormItem className="flex flex-col gap-1">
               <FormLabel className="flex items-center justify-between">
                 <p>Password Length</p>
-                <p className="text-lg text-primary">{field.value ?? 10}</p>
+                <p className="text-lg text-primary">{field.value ?? PASSWORD_CHAR_LENGTH_DEFAULT}</p>
               </FormLabel>
               <FormControl>
                 <Slider
@@ -81,7 +86,7 @@ export default function GeneratorConfiguratorForm() {
                       onCheckedChange={(checked) => {
                         field.onChange({
                           ...field.value,
-                          [option.id]: checked,
+                          [option.id]: checked === true,
                         });
                       }}
                     />
@@ -98,7 +103,7 @@ export default function GeneratorConfiguratorForm() {
 
         <div className="flex items-center w-full gap-2 transition-all">
           {/* Generate Button */}
-          <Button variant="default" className="uppercase flex flex-row items-center gap-2 flex-1">
+          <Button type="submit" variant="default" className="uppercase flex flex-row items-center gap-2 flex-1">
             Generate
             <MoveRight className="size-4" />
           </Button>

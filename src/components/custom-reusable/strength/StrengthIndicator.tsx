@@ -6,11 +6,11 @@ import { getReadablePasswordStrength } from "@/lib/helpers/helpers";
 
 export default function StrengthIndicator() {
   const { strength } = usePasswordStore((state) => state);
-  const readablePasswordStrengh = getReadablePasswordStrength(strength);
+  const readablePasswordStrength = getReadablePasswordStrength(strength);
 
   return (
     <div className="flex gap-2 items-center">
-      <p className="uppercase text-xl font-extrabold">{readablePasswordStrengh}</p>
+      <p className="uppercase text-xl font-extrabold">{readablePasswordStrength}</p>
       <StrengthPills strength={strength} />
     </div>
   );
