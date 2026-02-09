@@ -7,20 +7,20 @@ import {
   PasswordStrengthDescriptionType,
 } from "@/lib/types";
 
-const PASSWORD_STRENGTH_LABELS: Readonly<Record<PasswordStrength, string>> = Object.freeze({
+const PASSWORD_STRENGTH_LABELS = Object.freeze({
   [PasswordStrength.Empty]: "",
   [PasswordStrength.TooWeak]: "Too weak!",
   [PasswordStrength.Weak]: "Weak",
   [PasswordStrength.Medium]: "Medium",
   [PasswordStrength.Strong]: "Strong",
-});
+} as const satisfies Record<PasswordStrength, string>);
 
-const PASSWORD_CHARACTER_SET: Readonly<Record<keyof PasswordOptionsRecord, string>> = Object.freeze({
+const PASSWORD_CHARACTER_SET = Object.freeze({
   includeUppercase: "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
   includeLowercase: "abcdefghijklmnopqrstuvwxyz",
   includeNumbers: "0123456789",
   includeSymbols: "!@#$%^&*()_+[]{}|;:,.<>?/",
-});
+} as const satisfies Record<keyof PasswordOptionsRecord, string>);
 
 const PASSWORD_TOO_WEAK_LENGTH_THRESHOLD = 6;
 const PASSWORD_SYMBOLS_PATTERN = /[!@#$%^&*()_+[\]{}|;:,.<>?]/;
@@ -29,21 +29,21 @@ export function getReadablePasswordStrength(strength: PasswordStrength): string 
   return PASSWORD_STRENGTH_LABELS[strength];
 }
 
-export const pillStrengthMap: Readonly<Record<PasswordStrength, number>> = Object.freeze({
+export const pillStrengthMap = Object.freeze({
   [PasswordStrength.Empty]: 0,
   [PasswordStrength.TooWeak]: 1,
   [PasswordStrength.Weak]: 2,
   [PasswordStrength.Medium]: 3,
   [PasswordStrength.Strong]: 4,
-});
+} as const satisfies Record<PasswordStrength, number>);
 
-export const pillColorMap: Readonly<Record<PasswordStrength, string>> = Object.freeze({
+export const pillColorMap = Object.freeze({
   [PasswordStrength.TooWeak]: "bg-destructive",
   [PasswordStrength.Weak]: "bg-warning",
   [PasswordStrength.Medium]: "bg-yellow-500",
   [PasswordStrength.Strong]: "bg-primary",
   [PasswordStrength.Empty]: "bg-transparent",
-});
+} as const satisfies Record<PasswordStrength, string>);
 
 export const isActivePill = (strength: PasswordStrength, index: number): boolean => {
   return index < pillStrengthMap[strength];
