@@ -1,12 +1,10 @@
 "use client";
 
-import usePasswordStore from "@/lib/store/passwordStore";
 import { StrengthPills } from "@/components/custom-reusable/strength/StrengthPills";
-import { getReadablePasswordStrength } from "@/lib/helpers/helpers";
+import { useStrengthIndicator } from "@/lib/hooks/useStrengthIndicator";
 
 export default function StrengthIndicator() {
-  const { strength } = usePasswordStore((state) => state);
-  const readablePasswordStrength = getReadablePasswordStrength(strength);
+  const { strength, readablePasswordStrength } = useStrengthIndicator();
 
   return (
     <div className="flex gap-2 items-center">
