@@ -1,22 +1,16 @@
 "use client";
 
-import type { CheckedState } from "@radix-ui/react-checkbox";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
-import { handlePasswordGeneration } from "@/lib/helpers/helpers";
 import { GENERATION_TOAST } from "@/lib/constants/passwordUi";
-import usePasswordStore from "@/lib/store/passwordStore";
 import {
-  PASSWORD_DEFAULT_FORM_VALUES,
-  PasswordFormSchema,
-  PasswordFormType,
-  PasswordOptionId,
-  PasswordOptionsRecord,
-} from "@/lib/types";
-
-type FormOptionsOnChange = (value: PasswordOptionsRecord) => void;
-type FormCharacterLengthOnChange = (value: number) => void;
+  createGeneratorCharacterLengthChangeHandler,
+  createGeneratorOptionCheckedChangeHandler,
+} from "@/lib/helpers/generatorForm";
+import { handlePasswordGeneration } from "@/lib/helpers/helpers";
+import usePasswordStore from "@/lib/store/passwordStore";
+import { PASSWORD_DEFAULT_FORM_VALUES, PasswordFormSchema, PasswordFormType } from "@/lib/types";
 
 export const useGeneratorConfiguratorForm = () => {
   const { setPassword, setCopied, resetStore, isPasswordGenerated } = usePasswordStore((state) => state);
@@ -43,31 +37,12 @@ export const useGeneratorConfiguratorForm = () => {
     resetStore();
   };
 
-  const createHandleGeneratorOptionCheckedChange = (
-    options: PasswordOptionsRecord,
-    onChange: FormOptionsOnChange,
-    optionId: PasswordOptionId
-  ) => {
-    return (checked: CheckedState) => {
-      onChange({
-        ...options,
-        [optionId]: checked === true,
-      });
-    };
-  };
-
-  const createHandleGeneratorCharacterLengthChange = (onChange: FormCharacterLengthOnChange) => {
-    return (value: number[]) => {
-      onChange(value[0]);
-    };
-  };
-
   return {
     form,
     isPasswordGenerated,
     handleGeneratorFormSubmit,
     handleGeneratorReset,
-    createHandleGeneratorOptionCheckedChange,
-    createHandleGeneratorCharacterLengthChange,
+    createGeneratorOptionCheckedChangeHandler,
+    createGeneratorCharacterLengthChangeHandler,
   };
 };

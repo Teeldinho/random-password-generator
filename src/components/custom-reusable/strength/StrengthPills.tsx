@@ -2,27 +2,27 @@
 
 import React from "react";
 import { Badge, BadgeProps } from "@/components/ui/badge";
+import { PASSWORD_UI_DEFAULTS } from "@/lib/constants/passwordUi";
 import { PasswordStrength } from "@/lib/types";
 import { cn } from "@/lib/utils";
-import { isActivePill, pillColorMap } from "@/lib/helpers/helpers";
+import { getStrengthPillStates } from "@/lib/helpers/strengthPills";
 
 type StrengthPillProps = BadgeProps & {
   strength: PasswordStrength;
   pillCount?: number;
 };
 
-function StrengthPills({ strength, pillCount = 4, ...props }: StrengthPillProps) {
-  // Create pill elements
-  const pills = Array.from({ length: pillCount }, (_, i) => {
-    const isActive = isActivePill(strength, i);
+function StrengthPills({ strength, pillCount = PASSWORD_UI_DEFAULTS.STRENGTH_PILL_COUNT, ...props }: StrengthPillProps) {
+  const pillStates = getStrengthPillStates(strength, pillCount);
+  const pills = pillStates.map((pillState, i) => {
     return (
       <Badge
         key={i}
         className={cn(
           "flex-1 min-h-3 min-w-full rounded-sm transition-opacity duration-1000 p-0 m-0 border-2",
-          isActive ? pillColorMap[strength] : "bg-transparent",
-          isActive ? "border-transparent" : "border-white",
-          { "opacity-100": isActive, "opacity-80": !isActive }
+          pillState.colorClassName,
+          pillState.borderClassName,
+          pillState.opacityClassName
         )}
         {...props}
       />

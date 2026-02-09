@@ -13,7 +13,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Slider } from "../../ui/slider";
 import StrengthCard from "../strength/StrengthCard";
 import { cn } from "@/lib/utils";
-import { useGeneratorConfiguratorForm } from "@/lib/helpers/useGeneratorConfiguratorForm";
+import { useGeneratorConfiguratorForm } from "@/lib/hooks/useGeneratorConfiguratorForm";
 
 export default function GeneratorConfiguratorForm() {
   const {
@@ -21,8 +21,8 @@ export default function GeneratorConfiguratorForm() {
     isPasswordGenerated,
     handleGeneratorFormSubmit,
     handleGeneratorReset,
-    createHandleGeneratorOptionCheckedChange,
-    createHandleGeneratorCharacterLengthChange,
+    createGeneratorOptionCheckedChangeHandler,
+    createGeneratorCharacterLengthChangeHandler,
   } = useGeneratorConfiguratorForm();
 
   return (
@@ -43,7 +43,7 @@ export default function GeneratorConfiguratorForm() {
                   max={PASSWORD_CHAR_LENGTH_MAX}
                   step={1}
                   value={[field.value]}
-                  onValueChange={createHandleGeneratorCharacterLengthChange(field.onChange)}
+                  onValueChange={createGeneratorCharacterLengthChangeHandler(field.onChange)}
                 />
               </FormControl>
               {fieldState.error && <FormMessage>{fieldState.error.message}</FormMessage>}
@@ -61,7 +61,7 @@ export default function GeneratorConfiguratorForm() {
                   <FormControl>
                     <Checkbox
                       checked={field.value[option.id]}
-                      onCheckedChange={createHandleGeneratorOptionCheckedChange(field.value, field.onChange, option.id)}
+                      onCheckedChange={createGeneratorOptionCheckedChangeHandler(field.value, field.onChange, option.id)}
                     />
                   </FormControl>
                   <FormLabel>{option.label}</FormLabel>
