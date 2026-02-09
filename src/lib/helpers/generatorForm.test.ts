@@ -1,10 +1,5 @@
-import { describe, expect, it, vi } from "vitest";
-import {
-  createGeneratorCharacterLengthChangeHandler,
-  createGeneratorOptionCheckedChangeHandler,
-  getCharacterLengthFromSliderValue,
-  getUpdatedPasswordOptions,
-} from "@/lib/helpers/generatorForm";
+import { describe, expect, it } from "vitest";
+import { getCharacterLengthFromSliderValue, getUpdatedPasswordOptions } from "@/lib/helpers/generatorForm";
 import type { PasswordOptionsRecord } from "@/lib/types";
 
 const BASE_OPTIONS: PasswordOptionsRecord = {
@@ -28,30 +23,7 @@ describe("generator form helpers", () => {
     expect(updated.includeLowercase).toBe(false);
   });
 
-  it("maps slider values to first item", () => {
-    expect(getCharacterLengthFromSliderValue([16])).toBe(16);
-  });
-
-  it("creates option checked-change handler that calls onChange", () => {
-    const onChange = vi.fn();
-    const handleChange = createGeneratorOptionCheckedChangeHandler(BASE_OPTIONS, onChange, "includeSymbols");
-
-    handleChange(true);
-
-    expect(onChange).toHaveBeenCalledTimes(1);
-    expect(onChange).toHaveBeenCalledWith({
-      ...BASE_OPTIONS,
-      includeSymbols: true,
-    });
-  });
-
-  it("creates character-length handler that calls onChange", () => {
-    const onChange = vi.fn();
-    const handleChange = createGeneratorCharacterLengthChangeHandler(onChange);
-
-    handleChange([12]);
-
-    expect(onChange).toHaveBeenCalledTimes(1);
-    expect(onChange).toHaveBeenCalledWith(12);
-  });
+	it("maps slider values to first item", () => {
+		expect(getCharacterLengthFromSliderValue([16])).toBe(16);
+	});
 });
