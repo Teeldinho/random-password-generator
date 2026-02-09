@@ -22,6 +22,7 @@ export default function GeneratorConfiguratorForm() {
     handleGeneratorFormSubmit,
     handleGeneratorReset,
     createHandleGeneratorOptionCheckedChange,
+    createHandleGeneratorCharacterLengthChange,
   } = useGeneratorConfiguratorForm();
 
   return (
@@ -42,7 +43,7 @@ export default function GeneratorConfiguratorForm() {
                   max={PASSWORD_CHAR_LENGTH_MAX}
                   step={1}
                   value={[field.value]}
-                  onValueChange={(value) => field.onChange(value[0])}
+                  onValueChange={createHandleGeneratorCharacterLengthChange(field.onChange)}
                 />
               </FormControl>
               {fieldState.error && <FormMessage>{fieldState.error.message}</FormMessage>}

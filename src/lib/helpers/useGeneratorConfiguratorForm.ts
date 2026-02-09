@@ -16,6 +16,7 @@ import {
 } from "@/lib/types";
 
 type FormOptionsOnChange = (value: PasswordOptionsRecord) => void;
+type FormCharacterLengthOnChange = (value: number) => void;
 
 export const useGeneratorConfiguratorForm = () => {
   const { setPassword, setCopied, resetStore, isPasswordGenerated } = usePasswordStore((state) => state);
@@ -55,11 +56,18 @@ export const useGeneratorConfiguratorForm = () => {
     };
   };
 
+  const createHandleGeneratorCharacterLengthChange = (onChange: FormCharacterLengthOnChange) => {
+    return (value: number[]) => {
+      onChange(value[0]);
+    };
+  };
+
   return {
     form,
     isPasswordGenerated,
     handleGeneratorFormSubmit,
     handleGeneratorReset,
     createHandleGeneratorOptionCheckedChange,
+    createHandleGeneratorCharacterLengthChange,
   };
 };
