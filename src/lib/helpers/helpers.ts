@@ -45,8 +45,7 @@ export const pillColorMap: Readonly<Record<PasswordStrength, string>> = Object.f
   [PasswordStrength.Empty]: "bg-transparent",
 });
 
-// Utility function to check if a pill should be active based on the index
-export const isActivePill = (strength: PasswordStrength, index: number, pillStrengthMap: Record<PasswordStrength, number>): boolean => {
+export const isActivePill = (strength: PasswordStrength, index: number): boolean => {
   return index < pillStrengthMap[strength];
 };
 

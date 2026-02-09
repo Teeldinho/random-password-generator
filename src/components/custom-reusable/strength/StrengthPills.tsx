@@ -4,7 +4,7 @@ import React from "react";
 import { Badge, BadgeProps } from "@/components/ui/badge";
 import { PasswordStrength } from "@/lib/types";
 import { cn } from "@/lib/utils";
-import { isActivePill, pillColorMap, pillStrengthMap } from "@/lib/helpers/helpers";
+import { isActivePill, pillColorMap } from "@/lib/helpers/helpers";
 
 type StrengthPillProps = BadgeProps & {
   strength: PasswordStrength;
@@ -14,7 +14,7 @@ type StrengthPillProps = BadgeProps & {
 function StrengthPills({ strength, pillCount = 4, ...props }: StrengthPillProps) {
   // Create pill elements
   const pills = Array.from({ length: pillCount }, (_, i) => {
-    const isActive = isActivePill(strength, i, pillStrengthMap);
+    const isActive = isActivePill(strength, i);
     return (
       <Badge
         key={i}
