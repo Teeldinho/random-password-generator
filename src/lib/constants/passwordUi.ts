@@ -18,3 +18,10 @@ export const GENERATION_TOAST = {
 export const PASSWORD_UI_DEFAULTS = {
   STRENGTH_PILL_COUNT: 4,
 } as const;
+
+export const PASSWORD_GENERATOR_TEXT = {
+  TITLE: "Password Generator",
+  STRENGTH_LABEL: "Strength",
+  PASSWORD_LENGTH_LABEL: "Password Length",
+  GENERATE_BUTTON_LABEL: "Generate",
+} as const;

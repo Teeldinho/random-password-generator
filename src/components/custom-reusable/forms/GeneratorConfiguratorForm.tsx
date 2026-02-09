@@ -12,6 +12,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Checkbox } from "@/components/ui/checkbox";
 import { Slider } from "../../ui/slider";
 import StrengthCard from "../strength/StrengthCard";
+import { PASSWORD_GENERATOR_TEXT } from "@/lib/constants/passwordUi";
 import { cn } from "@/lib/utils";
 import { useGeneratorConfiguratorForm } from "@/lib/hooks/useGeneratorConfiguratorForm";
 
@@ -34,7 +35,7 @@ export default function GeneratorConfiguratorForm() {
           render={({ field, fieldState }) => (
             <FormItem className="flex flex-col gap-1">
               <FormLabel className="flex items-center justify-between">
-                <p>Password Length</p>
+                <p>{PASSWORD_GENERATOR_TEXT.PASSWORD_LENGTH_LABEL}</p>
                 <p className="text-lg text-primary">{field.value ?? PASSWORD_CHAR_LENGTH_DEFAULT}</p>
               </FormLabel>
               <FormControl>
@@ -77,7 +78,7 @@ export default function GeneratorConfiguratorForm() {
         <div className="flex items-center w-full gap-2 transition-all">
           {/* Generate Button */}
           <Button type="submit" variant="default" className="uppercase flex flex-row items-center gap-2 flex-1">
-            Generate
+            {PASSWORD_GENERATOR_TEXT.GENERATE_BUTTON_LABEL}
             <MoveRight className="size-4" />
           </Button>
 
