@@ -1,81 +1,121 @@
 # RandPassGen
 
-RandPassGen is a user-friendly password generator application that uses modern web technologies for secure password creation with customizable settings.
+RandPassGen is a password generator built with Next.js.
+
+You choose the password length and character types (uppercase, lowercase, numbers, symbols), generate a password, see its strength, and copy it to your clipboard.
 
 ![RandPassGen Preview](public/Desktop.png)
 
-## Project Overview
+## Features
 
-### Purpose
+- Generate passwords with configurable rules
+- Strength indicator (`Too Weak`, `Weak`, `Medium`, `Strong`)
+- Copy to clipboard with toast feedback
+- Form validation with sensible defaults
+- Lightweight, keyboard-friendly UI built on Radix primitives
+- Theme-aware styling with Tailwind utility classes
 
-The purpose of RandPassGen is to generate random, secure passwords based on user-defined criteria, such as length and character types. Users can customize the password settings and copy the generated password for use in various applications.
+## Tech Stack
 
-### Tech Stack
+- Core:
+  - Next.js 14 (patched 14.2.x line)
+  - React 18 + TypeScript
+  - Tailwind CSS
+- UI and state:
+  - Radix UI
+  - Zustand
+  - Sonner (toasts)
+  - Lucide React (icons)
+- Forms and validation:
+  - React Hook Form
+  - Zod
+- Testing:
+  - Vitest
+  - Testing Library
 
-#### Frontend
+## Project Conventions
 
-- **Next.js 14**: A React JS framework for server-rendered applications and static websites.
-- **Radix UI**: Used for UI components to ensure accessibility and high-quality user interfaces.
-- **Tailwind CSS**: Applied for styling, providing a utility-first approach to design.
-- **Zustand**: Used for state management, with slices for modular and maintainable state handling.
-- **React Hook Form**: Applied for form handling and validation.
-- **Zod**: Schema declaration and validation library for TypeScript.
+- `src/lib/constants`: static copy and fixed config values
+- `src/lib/helpers`: pure utility functions
+- `src/lib/hooks`: orchestration and side effects (store, toast, clipboard)
+- `src/components/custom-reusable`: render-focused application components
 
-### Additional Packages
+## Why This Structure Works
 
-- **Class Variance Authority**: Used for handling variant-based styling.
-- **Framer Motion**: Utilized for animations and enhancing user experience.
-- **Lucide React**: Included for icon components.
-- **Sonner**: Used for toast notifications.
+These conventions are not just folder preferences. They make the code easier to change safely.
 
-## Key Features
-
-- **Password Generation**: Generate random, secure passwords with customizable length and character types.
-- **Password Strength Indicator**: Visual indication of the generated password strength.
-- **Copy to Clipboard**: Easily copy the generated password to the clipboard.
-- **Form Validation**: Ensures valid input using Zod and React Hook Form.
-- **Dynamic Theming**: Implemented using Tailwind CSS variables.
+- Reuse: shared copy/config lives in constants, and pure logic in helpers can be reused by multiple hooks/components without duplication.
+- Testability: helpers are side-effect free, so tests can assert input/output behavior directly; hook logic is isolated and easier to mock when needed.
+- Presentational components: custom-reusable components mostly render UI and bind values/handlers from hooks, which keeps JSX files small and predictable.
+- Type safety consistency: strength values are modeled with a const-union (`PASSWORD_STRENGTH` + `PasswordStrength` type), so schemas, store, helpers, and UI all use the same source of truth.
 
 ## Getting Started
 
-1. **Install dependencies**:
+```bash
+npm install
+npm run dev
+```
 
-   ```sh
-   npm install
-   ```
+Open `http://localhost:3000`.
 
-2. **Run the development server**:
+To build and run production mode:
 
-   ```sh
-    npm run dev
-   ```
+```bash
+npm run build
+npm run start
+```
 
-3. Build for Production & Start
+## Scripts
 
-   ```sh
-   npm run build
-   npm run start
-   ```
+```bash
+npm run dev
+npm run build
+npm run start
+npm run lint
+npm run test
+npm run test:watch
+```
 
 ## Usage
 
-### Generate a Password
+1. Set password length with the slider.
+2. Choose which character groups to include.
+3. Click `Generate`.
+4. Click the copy icon to copy the result.
 
-1. **Set Character Length**: Use the slider to set the desired password length.
-2. **Select Character Types**: Check the boxes to include uppercase letters, lowercase letters, numbers, and symbols.
-3. **Generate Password**: Click the "Generate" button to create a password.
-4. **Copy Password**: Click the copy icon to copy the generated password to the clipboard.
+### Strength Scale
 
-### Password Strength
-
-The strength of the generated password is visually indicated with color-coded pills:
-
-- **Too Weak**: Red
-- **Weak**: Orange
-- **Medium**: Yellow
-- **Strong**: Green
+- Too Weak: red
+- Weak: orange
+- Medium: yellow
+- Strong: green
 
 ![Strengths Preview](public/Strengths.png)
+
+## Testing
+
+Tests are unit-focused and live in `__tests__` folders near the modules they cover.
+
+Examples:
+
+- `src/lib/helpers/__tests__/helpers.test.ts`
+- `src/lib/helpers/__tests__/generatorForm.test.ts`
+
+Run tests with:
+
+```bash
+npm run test
+```
+
+## Security Notes
+
+- Next.js is pinned to a patched 14.x release line for recent RSC-related advisories.
+- Transitive lockfile updates were applied for `cross-spawn` and `braces`.
+- Some upstream advisories may still appear in `npm audit` and require broader dependency upgrades.
+
+## Notes
+
+Password generation currently uses `Math.random()`. That is fine for demo/general use, but it is not cryptographically secure for high-security production requirements.
 
 ## Screenshots
 
